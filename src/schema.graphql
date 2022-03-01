@@ -45,8 +45,8 @@ type AuthorizationGrant {
 union AuthorizationUnion = GenericAuthorization | SendAuthorization | StakeAuthorization
 
 type Bank {
-  balance(address: String!, height: Float): [Coin!]!
-  total(height: Float): [Coin!]!
+  balance(address: String!, height: Float): [Coin!]
+  total(height: Float): [Coin!]
 }
 
 type Block {
@@ -746,10 +746,10 @@ type VotingParams {
 }
 
 type Wasm {
-  codeInfo(codeID: Int!, height: Float): CodeInfo!
-  contractInfo(contractAddress: String!, height: Float!): ContractInfo!
-  contractQuery(contractAddress: String!, height: Float, query: JSON!): Anything!
-  parameters(height: Float): WasmParams!
+  codeInfo(codeID: Int!, height: Float): CodeInfo
+  contractInfo(contractAddress: String!, height: Float!): ContractInfo
+  contractQuery(contractAddress: String!, height: Float, query: JSON!): Anything
+  parameters(height: Float): WasmParams
 }
 
 type WasmParams {

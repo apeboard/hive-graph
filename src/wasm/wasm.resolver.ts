@@ -16,12 +16,12 @@ export class WasmResolver {
     return {} as Wasm
   }
 
-  @ResolveField(() => CodeInfo)
+  @ResolveField(() => CodeInfo, { nullable: true })
   public async codeInfo(@Args() args: GetWasmCodeIDArgs): Promise<CodeInfo> {
     return this.wasmService.codeInfo(args.codeID, args.height)
   }
 
-  @ResolveField(() => ContractInfo)
+  @ResolveField(() => ContractInfo, { nullable: true })
   public async contractInfo(
     @Args('contractAddress') address: string,
     @Args('height') height: number,
@@ -29,7 +29,7 @@ export class WasmResolver {
     return this.wasmService.contractInfo(address, height)
   }
 
-  @ResolveField(() => AnythingScalar)
+  @ResolveField(() => AnythingScalar, { nullable: true })
   public async contractQuery(
     @Args('contractAddress') address: string,
     @Args() qryArgs: GetWasmQueryArgs,
@@ -38,7 +38,7 @@ export class WasmResolver {
     return this.wasmService.contractQuery(address, qryArgs.query, height)
   }
 
-  @ResolveField(() => WasmParams)
+  @ResolveField(() => WasmParams, { nullable: true })
   public async parameters(@Args() args: GetBaseArgs): Promise<WasmParams> {
     return this.wasmService.parameters(args.height)
   }
