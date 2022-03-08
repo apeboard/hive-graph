@@ -8,7 +8,6 @@ WORKDIR /usr/src/app
 # Copying this separately prevents re-running npm install on every code change.
 COPY package.json ./
 COPY package-lock.json ./
-COPY .npmrc ./
 
 # Install production dependencies.
 RUN npm install
