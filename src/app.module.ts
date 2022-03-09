@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common'
+import { Module, OnApplicationBootstrap } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { LoggerModule } from 'nestjs-pino'
-import { TerraModule } from 'nestjs-terra'
+import { InjectLCDClient, LCDClient, TerraModule } from 'nestjs-terra'
 import { join } from 'path'
 import pino from 'pino'
 import { AnythingScalar } from './anything.scalar'
@@ -110,4 +110,18 @@ import { WasmModule } from './wasm/wasm.module'
   ],
   providers: [AppResolver, AnythingScalar],
 })
-export class AppModule {}
+export class AppModule implements OnApplicationBootstrap {
+  constructor(
+    @InjectLCDClient()
+    private readonly lcdService: LCDClient,
+    private readonly config: ConfigService,
+  ) {}
+
+  onApplicationBootstrap() {
+    const origin = this.config.get<string>('ORIGIN')
+
+    if (origin) {
+      this.lcdService.apiRequester['axios'].defaults.headers.common['origin'] = origin
+    }
+  }
+}

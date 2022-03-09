@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer'
-import { IsEnum, IsString, IsNumberString, validateSync } from 'class-validator'
+import { IsEnum, IsString, IsNumberString, validateSync, IsOptional } from 'class-validator'
 
 export enum Environment {
   Development = 'development',
@@ -31,6 +31,10 @@ export class EnvironmentVariables {
 
   @IsString()
   CHAIN_ID: string | undefined
+
+  @IsString()
+  @IsOptional()
+  ORIGIN?: string | undefined
 }
 
 export function validate(config: Record<string, unknown>) {
