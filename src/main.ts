@@ -2,6 +2,7 @@ import { Logger as NestLogger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
+import { json } from 'body-parser'
 import * as compression from 'compression'
 import * as helmet from 'helmet'
 import * as hpp from 'hpp'
@@ -33,7 +34,8 @@ async function bootstrap() {
       },
     }),
   )
-  app.use([compression(), helmet(helmetOptions), hpp()])
+
+  app.use([json({ limit: '50mb' }), compression(), helmet(helmetOptions), hpp()])
 
   await app.listen(port)
 
